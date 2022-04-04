@@ -8,4 +8,4 @@ Owned by:
 Max Slavin,
 Yudong Sun,
 Samuel Grossman,
-Brandon Batezoku
+Brandon Botezatu
