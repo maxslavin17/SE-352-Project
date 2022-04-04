@@ -5,7 +5,7 @@ This project incorporates aspects and functionality used by DePaul University's 
 
 Owned by: 
 
-Max Slavin
-Yudong Sun
-Samuel Grossman
+Max Slavin,
+Yudong Sun,
+Samuel Grossman,
 Brandon Batezoku
