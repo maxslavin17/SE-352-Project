@@ -11,9 +11,9 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#jpa:
-#  generate-ddl: false
-#  hibernate:
-#    ddl-auto: none
-#  show-sql: false
-#  open-in-view: false
+jpa:
+  generate-ddl: false
+  hibernate:
+    ddl-auto: none
+  show-sql: false
+  open-in-view: false
