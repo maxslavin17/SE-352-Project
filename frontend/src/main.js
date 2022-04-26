@@ -5,11 +5,11 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/global.css'
 import locale from 'element-ui/lib/locale/lang/en'
-
+import request from "@/utils/request";
 Vue.config.productionTip = false
 
 Vue.use(ElementUI, { size: "mini" , locale});
-
+Vue.prototype.request=request
 new Vue({
   router,
   render: h => h(App)
