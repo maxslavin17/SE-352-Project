@@ -1,29 +1,59 @@
 package com.example.springboot.service.impl;
 
-import com.example.springboot.controller.dto.UserDTO;
 import com.example.springboot.entity.User;
-import com.example.springboot.mapper.UserMapper;
-import com.example.springboot.service.IUserService;
+import com.example.springboot.repository.UserRepository;
+import com.example.springboot.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+import java.util.List;
 
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+public class UserServiceImpl implements UserService {
+    @Autowired
+    private UserRepository userRepository;
 
-//    private static final Log LOG = Log.get();
+    public User findById(int id) {
+        return userRepository.findById(id).get();
+    }
+    public List<User> findAll()
+    {
+        return userRepository.findAll();
+    }
 
-    @Override
-    public boolean login(UserDTO userDTO) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", userDTO.getUsername());
-        queryWrapper.eq("password", userDTO.getPassword());
-        try {
-            User one = getOne(queryWrapper);
-            return one != null;
-        } catch (Exception e) {
-//            LOG.error(e);
-            return false;
+    public User save(User user)
+    {
+        return userRepository.save(user);
+    }
+
+    public User edit(User user)
+    {
+        return userRepository.save(user);
+    }
+
+    public boolean deleteById(int userId)
+    {
+        boolean result = true;
+        try
+        {
+            userRepository.deleteById(userId);
         }
+        catch(Exception ex)
+        {
+            result = false;
+        }
+        return result;
+    }
+    public boolean deleteBatchById(List<Integer> ids) {
+        boolean result = true;
+        try
+        {
+            userRepository.deleteAllByIdInBatch(ids);
+        }
+        catch(Exception ex)
+        {
+            result = false;
+        }
+        return result;
     }
 }

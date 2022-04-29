@@ -5,16 +5,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springboot.controller.dto.UserDTO;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.IUserService;
-import org.springframework.beans.factory.annotation.Value;
+import com.example.springboot.repository.UserRepository;
+import com.example.springboot.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import cn.hutool.core.util.StrUtil;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.List;
 
 
@@ -25,10 +22,48 @@ public class UserController {
 //    @Autowired
 //    private UserMapper userMapper;
 
-//    @Autowired
+    //    @Autowired
 //    private UserService userService;
+    @Autowired
+    private IUserService iuserService;
     @Resource
-    private IUserService userService;
+    private UserService userService;
+
+    @GetMapping
+    public List<User> findAll() {
+        List<User> all = userService.findAll();
+        return all;
+    }
+    @GetMapping("/{id}")
+    public User findOne(@PathVariable Integer id) {
+        return userService.findById(id);
+    }
+
+    @PostMapping
+    public boolean add(@RequestBody User user) {
+        boolean result = true;
+        try
+        {
+            userService.save(user);
+        }
+        catch(Exception ex)
+        {
+            result = false;
+        }
+        return result;
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable Integer id) {
+        userService.deleteById(id);
+        return true;
+    }
+
+    @PostMapping("/del/batch")
+    public boolean deleteBatch(@RequestBody List<Integer> ids) { // [1,2,3]
+        userService.deleteBatchById(ids);
+        return true;
+    }
 
     @PostMapping("/login")
     public boolean login(@RequestBody UserDTO userDTO) {
@@ -37,37 +72,12 @@ public class UserController {
         if (StrUtil.isBlank(username) || StrUtil.isBlank(password)) {
             return false;
         }
-        return userService.login(userDTO);
+        return iuserService.login(userDTO);
     }
-    @GetMapping
-    public List<User> findAll() {
-        List<User> all = userService.list();
-        return all;
-    }
-    @GetMapping("/{id}")
-    public User findOne(@PathVariable Integer id) {
-        return userService.getById(id);
-    }
-
-    @PostMapping
-    public boolean save(@RequestBody User user) {
-        return userService.saveOrUpdate(user);
-    }
-
-    @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Integer id) {
-        return userService.removeById(id);
-    }
-
-    @PostMapping("/del/batch")
-    public boolean deleteBatch(@RequestBody List<Integer> ids) { // [1,2,3]
-        return userService.removeByIds(ids);
-    }
-
-//    @GetMapping("/page")
+    //    @GetMapping("/page")
 //    public Map<String, Object> findPage(@RequestParam Integer pageNum,
 //                                        @RequestParam Integer pageSize,
-//                                        @RequestParam String username) {
+//                                        @RequestParam(defaultValue = "") String username) {
 //        pageNum = (pageNum - 1) * pageSize;
 //        username = "%" + username + "%";
 //        List<User> data = userMapper.selectPage(pageNum, pageSize, username);
@@ -79,10 +89,10 @@ public class UserController {
 //    }
     @GetMapping("/page")
     public Page<User> findPage(@RequestParam Integer pageNum,
-                                @RequestParam Integer pageSize,
-                                @RequestParam(defaultValue = "") String username,
-                                @RequestParam(defaultValue = "") String email,
-                                @RequestParam(defaultValue = "") String address) {
+                               @RequestParam Integer pageSize,
+                               @RequestParam(defaultValue = "") String username,
+                               @RequestParam(defaultValue = "") String email,
+                               @RequestParam(defaultValue = "") String address) {
         Page<User> page = new Page<>(pageNum, pageSize);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         if (!"".equals(username)) {
@@ -95,7 +105,7 @@ public class UserController {
             queryWrapper.like("address", address);
         }
         queryWrapper.orderByDesc("id");
-        return userService.page(page, queryWrapper);
+        return iuserService.page(page, queryWrapper);
     }
 }
 
@@ -199,6 +209,6 @@ public class UserController {
 //        return userService.page(page, queryWrapper);
 //    }
 //}
-
-
-
+//
+//
+//
