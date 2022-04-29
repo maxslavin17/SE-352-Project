@@ -6,7 +6,7 @@ import com.example.springboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class UserService extends ServiceImpl<UserMapper, User> {
     public boolean saveUser(User user) {
         if (user.getId() == null) {
