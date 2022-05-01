@@ -41,10 +41,12 @@ export default {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {
           this.request.post("/user/login", this.user).then(res => {
-            if(!res) {
-              this.$message.error("wrong username or password")
-            } else {
+            if(res.code === '200') {
+              localStorage.setItem("user", JSON.stringify(res.data))
               this.$router.push("/")
+              this.$message.success("login success")
+            } else {
+              this.$message.error(res.msg)
             }
           })
         } else {
