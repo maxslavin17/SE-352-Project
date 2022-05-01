@@ -5,5 +5,5 @@ import com.example.springboot.controller.dto.UserDTO;
 import com.example.springboot.entity.User;
 
 public interface IUserService extends IService<User> {
-    boolean login(UserDTO userDTO);
+    UserDTO login(UserDTO userDTO);
 }

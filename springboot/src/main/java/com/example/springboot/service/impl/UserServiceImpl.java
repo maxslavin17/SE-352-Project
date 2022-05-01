@@ -16,23 +16,21 @@ public class UserServiceImpl implements UserService {
     public User findById(int id) {
         return userRepository.findById(id).get();
     }
-    public List<User> findAll()
-    {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
-
-    public User save(User user)
-    {
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+    public User save(User user) {
         return userRepository.save(user);
     }
 
-    public User edit(User user)
-    {
+    public User edit(User user) {
         return userRepository.save(user);
     }
 
-    public boolean deleteById(int userId)
-    {
+    public boolean deleteById(int userId) {
         boolean result = true;
         try
         {

@@ -1,5 +1,7 @@
 package com.example.springboot.controller;
 
+import com.example.springboot.common.DefConst;
+import com.example.springboot.common.Result;
 import com.example.springboot.controller.dto.UserDTO;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.IUserService;
@@ -18,25 +20,26 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-//    @Autowired
-//    private UserMapper userMapper;
     @Autowired
     private IUserService iuserService;
     @Resource
     private UserService userService;
 
     @GetMapping
-    public List<User> findAll() {
+    public Result findAll() {
         List<User> all = userService.findAll();
-        return all;
+        return Result.success(all);
     }
     @GetMapping("/{id}")
-    public User findOne(@PathVariable Integer id) {
-        return userService.findById(id);
+    public Result findById(@PathVariable Integer id) {
+        return Result.success(userService.findById(id));
     }
-
+    @GetMapping("/username/{username}")
+    public Result findByUsername(@PathVariable String username) {
+        return Result.success(userService.findByUsername(username));
+    }
     @PostMapping
-    public boolean add(@RequestBody User user) {
+    public Result add(@RequestBody User user) {
         boolean result = true;
         try
         {
@@ -46,61 +49,41 @@ public class UserController {
         {
             result = false;
         }
-        return result;
+        return Result.success(result);
     }
 
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Integer id) {
+    public Result delete(@PathVariable Integer id) {
         userService.deleteById(id);
-        return true;
+        return Result.success(true);
     }
 
     @PostMapping("/del/batch")
-    public boolean deleteBatch(@RequestBody List<Integer> ids) { // [1,2,3]
+    public Result deleteBatch(@RequestBody List<Integer> ids) { // [1,2,3]
         userService.deleteBatchById(ids);
-        return true;
+        return Result.success(true);
     }
 
     @PostMapping("/login")
-    public boolean login(@RequestBody UserDTO userDTO) {
+    public Result login(@RequestBody UserDTO userDTO) {
         String username = userDTO.getUsername();
         String password = userDTO.getPassword();
         if (StrUtil.isBlank(username) || StrUtil.isBlank(password)) {
-            return false;
+            return Result.error(DefConst.Code_400, "parameter error");
         }
-        return iuserService.login(userDTO);
+        UserDTO dto = iuserService.login(userDTO);
+        return Result.success(dto);
     }
-    //    @GetMapping("/page")
-//    public Map<String, Object> findPage(@RequestParam Integer pageNum,
-//                                        @RequestParam Integer pageSize,
-//                                        @RequestParam(defaultValue = "") String username) {
-//        pageNum = (pageNum - 1) * pageSize;
-//        username = "%" + username + "%";
-//        List<User> data = userMapper.selectPage(pageNum, pageSize, username);
-//        Integer total = userMapper.selectTotal(username);
-//        Map<String, Object> res = new HashMap<>();
-//        res.put("data", data);
-//        res.put("total", total);
-//        return res;
-//    }
     @GetMapping("/page")
-    public Page<User> findPage(@RequestParam Integer pageNum,
+    public Result findPage(@RequestParam Integer pageNum,
                                @RequestParam Integer pageSize,
-                               @RequestParam(defaultValue = "") String username,
-                               @RequestParam(defaultValue = "") String email,
-                               @RequestParam(defaultValue = "") String address) {
+                               @RequestParam(defaultValue = "") String username) {
         Page<User> page = new Page<>(pageNum, pageSize);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         if (!"".equals(username)) {
             queryWrapper.like("username", username);
         }
-        if (!"".equals(email)) {
-            queryWrapper.like("email", email);
-        }
-        if (!"".equals(address)) {
-            queryWrapper.like("address", address);
-        }
         queryWrapper.orderByDesc("id");
-        return iuserService.page(page, queryWrapper);
+        return Result.success(iuserService.page(page, queryWrapper));
     }
 }
