@@ -1,7 +1,5 @@
 package com.example.springboot.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springboot.controller.dto.UserDTO;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.IUserService;
@@ -9,6 +7,8 @@ import com.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,9 +20,6 @@ public class UserController {
 
 //    @Autowired
 //    private UserMapper userMapper;
-
-    //    @Autowired
-//    private UserService userService;
     @Autowired
     private IUserService iuserService;
     @Resource

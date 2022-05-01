@@ -1,22 +1,20 @@
 package com.example.springboot.entity;
 
-import javax.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "course")
-public class Course {
+@Table(name = "my_course")
+public class MyCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String cid;
-    private String cname;
-    private String description;
+    private String mycid;
+    private String mycname;
+    private String mydescription;
 //    @ManyToMany(mappedBy = "courses")
 //    private List<Student> students = new ArrayList<>();
 }
