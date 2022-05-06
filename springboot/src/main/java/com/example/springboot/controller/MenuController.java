@@ -17,13 +17,21 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/menu")
 public class MenuController {
-
-    @Autowired
-    private IMenuService imenuService;
     @Resource
     private MenuService menuService;
+    @Autowired
+    private IMenuService imenuService;
 
-//    @GetMapping
+    @GetMapping
+    public Result findAll(@RequestParam(defaultValue = "") String name) {
+        List<Menu> list = menuService.findAll();
+        List<Menu> parentNode = list.stream().filter(menu -> menu.getPid() == null).collect(Collectors.toList());
+        for (Menu menu: parentNode) {
+            menu.setChildren(list.stream().filter(m -> menu.getId().equals(m.getPid())).collect(Collectors.toList()));
+        }
+        return Result.success(parentNode);
+    }
+    //@GetMapping
 //    public Result findAll(@RequestParam(defaultValue = "") String name) {
 //        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
 //        queryWrapper.like("name", name);
@@ -35,15 +43,6 @@ public class MenuController {
 //        //List<Menu> all = menuService.findAll();
 //        return Result.success(parentNode);
 //    }
-    @GetMapping
-    public Result findAll(@RequestParam(defaultValue = "") String name) {
-        List<Menu> list = menuService.findAll();
-        List<Menu> parentNode = list.stream().filter(menu -> menu.getPid() == null).collect(Collectors.toList());
-        for (Menu menu: parentNode) {
-            menu.setChildren(list.stream().filter(m -> menu.getId().equals(m.getPid())).collect(Collectors.toList()));
-        }
-        return Result.success(parentNode);
-    }
     @GetMapping("/{id}")
     public Result findById(@PathVariable Integer id) {
         return Result.success(menuService.findById(id));

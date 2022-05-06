@@ -15,11 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/course")
 public class CourseController {
-
-    @Autowired
-    private ICourseService icourseService;
     @Resource
     private CourseService courseService;
+    @Autowired
+    private ICourseService icourseService;
 
     @GetMapping
     public List<Course> findAll() {

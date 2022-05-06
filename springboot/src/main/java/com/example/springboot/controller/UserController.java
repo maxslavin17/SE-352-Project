@@ -19,11 +19,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
-    @Autowired
-    private IUserService iuserService;
     @Resource
     private UserService userService;
+    @Autowired
+    private IUserService iuserService;
 
     @GetMapping
     public Result findAll() {

@@ -16,11 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/role")
 public class RoleController {
-
-    @Autowired
-    private IRoleService iroleService;
     @Resource
     private RoleService roleService;
+    @Autowired
+    private IRoleService iroleService;
 
     @GetMapping
     public Result findAll() {
@@ -69,5 +68,16 @@ public class RoleController {
         }
 //        queryWrapper.orderByDesc("id");
         return Result.success(iroleService.page(page, queryWrapper));
+    }
+
+    @PostMapping("/roleMenu/{roleId}")
+    public Result roleMenu(@PathVariable Integer roleId, @RequestBody List<Integer> menuIds) {
+        iroleService.setRoleMenu(roleId, menuIds);
+        return Result.success();
+    }
+
+    @GetMapping("/roleMenu/{roleId}")
+    public Result getRoleMenu(@PathVariable Integer roleId) {
+        return Result.success(iroleService.getRoleMenu(roleId));
     }
 }
