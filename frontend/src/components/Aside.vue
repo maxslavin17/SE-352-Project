@@ -1,6 +1,6 @@
 <template>
   <el-menu :default-openeds="['1', '3']" style="min-height: 100%; overflow-x: hidden"
-           background-color="rgb(48, 65, 86)"
+           background-color="rgb(0, 0, 0)"
            text-color="#fff"
            active-text-color="#ffd04b"
            :collapse-transition="false"
@@ -25,6 +25,14 @@
       <el-menu-item index="/user">
         <i class="el-icon-s-custom"></i>
         <span slot="title">USER</span>
+      </el-menu-item>
+      <el-menu-item index="/role">
+        <i class="el-icon-s-custom"></i>
+        <span slot="title">Role</span>
+      </el-menu-item>
+      <el-menu-item index="/menu">
+        <i class="el-icon-s-custom"></i>
+        <span slot="title">Menu</span>
       </el-menu-item>
       <el-menu-item index="/course">
         <i class="el-icon-reading"></i>

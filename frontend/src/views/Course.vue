@@ -3,7 +3,7 @@
     <div style="margin: 10px 0">
       <el-input style="width: 200px" placeholder="Please Input Coursename" suffix-icon="el-icon-search" v-model="cname"></el-input>
       <el-button class="ml-5" type="primary" @click="load">Search</el-button>
-      <el-button type="warning" @click="reset">Reset</el-button>
+      <el-button type="primary" @click="reset">Reset</el-button>
     </div>
 
     <div style="margin: 10px 0">
@@ -17,7 +17,7 @@
           title="Are you sure to delete？"
           @confirm="delBatch"
       >
-        <el-button type="danger" slot="reference">DeleteBatch <i class="el-icon-remove-outline"></i></el-button>
+        <el-button type="primary" slot="reference">DeleteBatch <i class="el-icon-remove-outline"></i></el-button>
       </el-popconfirm>
     </div>
 
@@ -39,7 +39,7 @@
               title="Are you sure？"
               @confirm="del(scope.row.id)"
           >
-            <el-button type="danger" slot="reference"> Delete<i class="el-icon-remove-outline"></i></el-button>
+            <el-button type="primary" slot="reference"> Delete<i class="el-icon-remove-outline"></i></el-button>
           </el-popconfirm>
         </template>
       </el-table-column>

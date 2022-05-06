@@ -13,6 +13,8 @@ const routes = [
       { path: 'home', name: 'Home', component: () => import('../views/Home.vue')},
       { path: 'user', name: 'User', component: () => import('../views/User.vue')},
       { path: 'person', name: 'Person', component: () => import('../views/Person.vue')},
+      { path: 'role', name: 'Role', component: () => import('../views/Role.vue')},
+      { path: 'menu', name: 'Menu', component: () => import('../views/Menu.vue')},
       { path: 'course', name: 'Course', component: () => import('../views/Course.vue')},
       { path: 'mycourse', name: 'MyCourse', component: () => import('../views/MyCourse.vue')},
     ]

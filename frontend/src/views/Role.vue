@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="Please Input Coursename" suffix-icon="el-icon-search" v-model="mycname"></el-input>
+      <el-input style="width: 200px" placeholder="Please Input Name" suffix-icon="el-icon-search" v-model="name"></el-input>
       <el-button class="ml-5" type="primary" @click="load">Search</el-button>
       <el-button type="primary" @click="reset">Reset</el-button>
     </div>
@@ -24,12 +24,12 @@
     <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="mycid" label="Course Identifier" width="280"></el-table-column>
-      <el-table-column prop="mycname" label="Name" width="235"></el-table-column>
-      <el-table-column prop="mydescription" label="Description" width="400"></el-table-column>
-      <el-table-column label="operation"  width="500" align="center">
+      <el-table-column prop="name" label="Name"></el-table-column>
+      <el-table-column prop="description" label="Description" ></el-table-column>
+      <el-table-column label="Operation"  width="280" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" @click="handleEdit(scope.row)">Enroll <i class="el-icon-edit"></i></el-button>
+          <el-button type="primary" @click="selectMenu(scope.row.id)">Menu <i class="el-icon-menu"></i></el-button>
+          <el-button type="primary" @click="handleEdit(scope.row)">Edit <i class="el-icon-edit"></i></el-button>
           <el-popconfirm
               class="ml-5"
               confirm-button-text='YES'
@@ -57,16 +57,13 @@
       </el-pagination>
     </div>
 
-    <el-dialog title="Course Information" :visible.sync="dialogFormVisible" width="30%" >
+    <el-dialog title="Role" :visible.sync="dialogFormVisible" width="30%" >
       <el-form label-width="80px" size="small">
-        <el-form-item label="course id">
-          <el-input v-model="form.mycid" autocomplete="off"></el-input>
+        <el-form-item label="Name">
+          <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="name">
-          <el-input v-model="form.mycname" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="description">
-          <el-input v-model="form.mydescription" autocomplete="off"></el-input>
+        <el-form-item label="Description">
+          <el-input v-model="form.description" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -75,22 +72,42 @@
       </div>
     </el-dialog>
 
+    <el-dialog title="Menu Manage" :visible.sync="menuDialogVis" width="30%">
+      <el-tree
+          :props="props"
+          :data="menuData"
+          show-checkbox
+          node-key="id"
+          :default-expanded-keys="[1]"
+          :default-checked-keys="[4]"
+          @check-change="handleCheckChange">
+      </el-tree>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="menuDialogVis = false">Cancel</el-button>
+        <el-button type="primary" @click="save">Confirm</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 export default {
-  name: "mycourse",
+  name: "Role",
   data() {
     return {
       tableData: [],
       total: 0,
       pageNum: 1,
-      pageSize: 2,
-      mycname: "",
+      pageSize: 10,
+      name: "",
       form: {},
       dialogFormVisible: false,
-      multipleSelection: []
+      multipleSelection: [],
+      menuDialogVis: false,
+      menuData: [],
+      props: {
+        label: 'name',
+      }
     }
   },
   created() {
@@ -98,25 +115,23 @@ export default {
   },
   methods: {
     load() {
-      this.request.get("/mycourse/page", {
+      this.request.get("/role/page", {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          username: this.username,
-          email: this.email,
-          address: this.address,
+          name: this.name,
         }
       }).then(res => {
         console.log(res)
 
-        this.tableData = res.records
-        this.total = res.total
+        this.tableData = res.data.records
+        this.total = res.data.total
 
       })
     },
     save() {
-      this.request.post("/mycourse", this.form).then(res => {
-        if (res) {
+      this.request.post("/role", this.form).then(res => {
+        if (res.code === '200') {
           this.$message.success("Save Success")
           this.dialogFormVisible = false
           this.load()
@@ -134,8 +149,8 @@ export default {
       this.dialogFormVisible = true
     },
     del(id) {
-      this.request.delete("/mycourse/" + id).then(res => {
-        if (res) {
+      this.request.delete("/role/" + id).then(res => {
+        if (res.code === '200') {
           this.$message.success("Delete Success")
           this.load()
         } else {
@@ -149,8 +164,8 @@ export default {
     },
     delBatch() {
       let ids = this.multipleSelection.map(v => v.id)  // [{}, {}, {}] => [1,2,3]
-      this.request.post("/mycourse/del/batch", ids).then(res => {
-        if (res) {
+      this.request.post("/role/del/batch", ids).then(res => {
+        if (res.code === '200') {
           this.$message.success("Delete Batch Success")
           this.load()
         } else {
@@ -159,9 +174,7 @@ export default {
       })
     },
     reset() {
-      this.username = ""
-      this.email = ""
-      this.address = ""
+      this.name = ""
       this.load()
     },
     handleSizeChange(pageSize) {
@@ -173,7 +186,16 @@ export default {
       console.log(pageNum)
       this.pageNum = pageNum
       this.load()
-    }
+    },
+    selectMenu(roleId) {
+      this.menuDialogVis = true
+      this.request.get("/menu").then(res => {
+        this.menuData = res.data
+      })
+    },
+    handleCheckChange(data, checked, indeterminate) {
+      console.log(data, checked, indeterminate);
+    },
   }
 }
 </script>
