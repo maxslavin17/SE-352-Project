@@ -26,9 +26,9 @@
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="name" label="Name"></el-table-column>
       <el-table-column prop="description" label="Description" ></el-table-column>
-      <el-table-column label="Operation"  width="280" align="center">
+      <el-table-column label="Operation"  width="320" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" @click="selectMenu(scope.row.id)">Menu <i class="el-icon-menu"></i></el-button>
+          <el-button type="primary" @click="selectMenu(scope.row.id)">Menu Access <i class="el-icon-menu"></i></el-button>
           <el-button type="primary" @click="handleEdit(scope.row)">Edit <i class="el-icon-edit"></i></el-button>
           <el-popconfirm
               class="ml-5"
@@ -78,13 +78,16 @@
           :data="menuData"
           show-checkbox
           node-key="id"
-          :default-expanded-keys="[1]"
-          :default-checked-keys="[4]"
-          @check-change="handleCheckChange">
+          ref="tree"
+          :default-expanded-keys="expands"
+          :default-checked-keys="checks">
+        <span class="custom-tree-node" slot-scope="{ node, data }">
+            <span>{{ data.name }}</span>
+         </span>
       </el-tree>
       <div slot="footer" class="dialog-footer">
         <el-button @click="menuDialogVis = false">Cancel</el-button>
-        <el-button type="primary" @click="save">Confirm</el-button>
+        <el-button type="primary" @click="saveRoleMenu">Confirm</el-button>
       </div>
     </el-dialog>
   </div>
@@ -107,7 +110,11 @@ export default {
       menuData: [],
       props: {
         label: 'name',
-      }
+      },
+      expands: [],
+      checks: [],
+      roleId: 0,
+      roleFlag: ''
     }
   },
   created() {
@@ -137,6 +144,17 @@ export default {
           this.load()
         } else {
           this.$message.error("Save Failure")
+        }
+      })
+    },
+    saveRoleMenu() {
+      this.request.post("/role/roleMenu/" + this.roleId, this.$refs.tree.getCheckedKeys()).then(res => {
+        if (res.code === '200') {
+          this.$message.success("Save Success")
+          this.menuDialogVis = false
+
+        } else {
+          this.$message.error(res.msg)
         }
       })
     },
@@ -187,11 +205,19 @@ export default {
       this.pageNum = pageNum
       this.load()
     },
-    selectMenu(roleId) {
+    selectMenu(roleID) {
+      this.roleId = roleID
       this.menuDialogVis = true
+
       this.request.get("/menu").then(res => {
         this.menuData = res.data
+
+        this.expands = this.menuData.map(value => value.id)
       })
+      this.request.get("/role/roleMenu/" + this.roleId).then(res => {
+        this.checks = res.data
+      })
+
     },
     handleCheckChange(data, checked, indeterminate) {
       console.log(data, checked, indeterminate);
