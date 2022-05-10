@@ -25,6 +25,7 @@
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="username" label="username" width="140"></el-table-column>
+      <el-table-column prop="role" label="Role"></el-table-column>
       <el-table-column prop="lastname" label="lastname" width="120"></el-table-column>
       <el-table-column prop="email" label="email"></el-table-column>
       <el-table-column prop="phone" label="phone"></el-table-column>
@@ -61,19 +62,24 @@
 
     <el-dialog title="Personal Information" :visible.sync="dialogFormVisible" width="30%" >
       <el-form label-width="80px" size="small">
-        <el-form-item label="username">
+        <el-form-item label="Username">
           <el-input v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="lastname">
+        <el-form-item label="Role">
+          <el-select clearable v-model="form.role" placeholder="Select Role" style="width: 100%">
+            <el-option v-for="item in roles" :key="item.name" :label="item.name" :value="item.category"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Lastname">
           <el-input v-model="form.lastname" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="email">
+        <el-form-item label="Email">
           <el-input v-model="form.email" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="phone">
+        <el-form-item label="Phone">
           <el-input v-model="form.phone" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="address">
+        <el-form-item label="Address">
           <el-input v-model="form.address" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -100,7 +106,8 @@ export default {
       address: "",
       form: {},
       dialogFormVisible: false,
-      multipleSelection: []
+      multipleSelection: [],
+      roles: []
     }
   },
   created() {
@@ -118,13 +125,15 @@ export default {
         }
       }).then(res => {
         console.log(res)
-
         this.tableData = res.data.records
         this.total = res.data.total
+      })
 
+      this.request.get("/role").then(res => {
+        this.roles = res.data
       })
     },
-    save() {
+    save() {//confirm
       this.request.post("/user", this.form).then(res => {
         if (res.data) {
           this.$message.success("Save Success")

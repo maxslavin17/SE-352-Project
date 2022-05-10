@@ -43,6 +43,7 @@ export default {
           this.request.post("/user/login", this.user).then(res => {
             if(res.code === '200') {
               localStorage.setItem("user", JSON.stringify(res.data))
+              localStorage.setItem("menus", JSON.stringify(res.data.menus))
               this.$router.push("/")
               this.$message.success("login success")
             } else {

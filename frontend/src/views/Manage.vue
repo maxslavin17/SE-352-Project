@@ -47,7 +47,7 @@ export default {
         this.collapseBtnClass = 'el-icon-s-fold'
         this.logoTextShow = true
       }
-    }
+    },
   }
 }
 </script>
