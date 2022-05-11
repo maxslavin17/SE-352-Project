@@ -7,5 +7,4 @@ Owned by:
 
 Max Slavin,
 Yudong Sun,
-Samuel Grossman,
 Brandon Botezatu
