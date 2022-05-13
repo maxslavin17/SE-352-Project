@@ -24,14 +24,15 @@
     <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="username" label="username" width="140"></el-table-column>
+      <el-table-column prop="username" label="Username" width="140"></el-table-column>
       <el-table-column prop="role" label="Role"></el-table-column>
-      <el-table-column prop="lastname" label="lastname" width="120"></el-table-column>
-      <el-table-column prop="email" label="email"></el-table-column>
-      <el-table-column prop="phone" label="phone"></el-table-column>
-      <el-table-column prop="address" label="address"></el-table-column>
-      <el-table-column label="operation"  width="200" align="center">
+      <el-table-column prop="lastname" label="Lastname" width="120"></el-table-column>
+      <el-table-column prop="email" label="Email"></el-table-column>
+      <el-table-column prop="phone" label="Phone"></el-table-column>
+      <el-table-column prop="address" label="Address"></el-table-column>
+      <el-table-column label="Operation"  width="350" align="center">
         <template slot-scope="scope">
+          <el-button type="primary" @click="checkStuCourse(scope.row.stuCourse)">Enrolled Course<i class="el-icon-edit"></i></el-button>
           <el-button type="primary" @click="handleEdit(scope.row)">Edit <i class="el-icon-edit"></i></el-button>
           <el-popconfirm
               class="ml-5"
@@ -89,6 +90,12 @@
       </div>
     </el-dialog>
 
+    <el-dialog title="Course Info" :visible.sync="stuVis" width="30%" >
+      <el-table :data="stuCourses" border stripe>
+        <el-table-column prop="cid" label="Number"></el-table-column>
+        <el-table-column prop="cname" label="Course"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -100,14 +107,15 @@ export default {
       tableData: [],
       total: 0,
       pageNum: 1,
-      pageSize: 2,
+      pageSize: 10,
       username: "",
       email: "",
       address: "",
       form: {},
       dialogFormVisible: false,
       multipleSelection: [],
-      roles: []
+      roles: [],
+      stuVis: false
     }
   },
   created() {
@@ -192,6 +200,10 @@ export default {
       console.log(pageNum)
       this.pageNum = pageNum
       this.load()
+    },
+    checkStuCourse(stuCourses) {
+      this.stuCourse = stuCourses
+      this.stuVis = true
     }
   }
 }

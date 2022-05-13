@@ -29,7 +29,8 @@
       <el-table-column prop="description" label="Description" width="400"></el-table-column>
       <el-table-column label="operation"  width="500" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" @click="handleEnroll(scope.row)">Enroll <i class="el-icon-edit"></i></el-button>
+          <el-button type="primary" @click="handleEnroll(scope.row.id)">Enroll <i class="el-icon-edit"></i></el-button>
+<!--          <el-button type="primary" @click="handleEdit(scope.row)" v-if="user.role === 'ADMID'">Edit <i class="el-icon-edit"></i></el-button>-->
           <el-popconfirm
               class="ml-5"
               confirm-button-text='YES'
@@ -87,11 +88,12 @@ export default {
       tableData: [],
       total: 0,
       pageNum: 1,
-      pageSize: 2,
+      pageSize: 10,
       cname: "",
       form: {},
       dialogFormVisible: false,
-      multipleSelection: []
+      multipleSelection: [],
+      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
     }
   },
   created() {
@@ -141,9 +143,14 @@ export default {
       this.dialogFormVisible = true
       this.form = {}
     },
-    handleEnroll(row) {
-      this.form = row
-      this.dialogFormVisible = true
+    handleEnroll(courseId) {
+      this.request.post('/course/studentCourse/' + courseId + "/" + this.user.id).then(res => {
+        if (res) {
+          this.$message.success("Enroll Success")
+        } else {
+          this.$message.error("Already Enrolled!")
+        }
+      })
     },
     handleEdit(row) {
       this.form = row

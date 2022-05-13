@@ -1,10 +1,15 @@
 package com.example.springboot.entity;
 
 import javax.persistence.*;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,4 +28,13 @@ public class User {
     private String address;
     //private LocalDateTime createTime;
     private String role;
+
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="student_course",
+                uniqueConstraints = {@UniqueConstraint(columnNames = {"stu_id","cou_id"})},
+                joinColumns = {@JoinColumn(name="stu_id", referencedColumnName = "id")},
+                inverseJoinColumns = {@JoinColumn(name="cou_id", referencedColumnName = "id")}
+    )
+    @TableField(exist = false)
+    private List<Course> courses = new ArrayList<Course>();
 }

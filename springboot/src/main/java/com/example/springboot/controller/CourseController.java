@@ -33,17 +33,23 @@ public class CourseController {
     @PostMapping
     public boolean add(@RequestBody Course course) {
         boolean result = true;
-        try
-        {
+        try {
             courseService.save(course);
-        }
-        catch(Exception ex)
-        {
+        } catch(Exception ex) {
             result = false;
         }
         return result;
     }
-
+    @PostMapping("/studentCourse/{courseId}/{studentId}")
+    public boolean studentCourse(@PathVariable Integer courseId, @PathVariable Integer studentId) {
+        boolean result = true;
+        try {
+            courseService.setStudentCourse(courseId, studentId);
+        } catch(Exception ex) {
+            result = false;
+        }
+        return result;
+    }
     @DeleteMapping("/{id}")
     public boolean delete(@PathVariable Integer id) {
         courseService.deleteById(id);

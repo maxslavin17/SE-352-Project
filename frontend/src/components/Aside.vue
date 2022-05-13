@@ -40,6 +40,18 @@
         <span slot="title">HOME</span>
       </template>
     </el-menu-item>
+    <el-menu-item index="/course">
+      <template slot="title">
+        <i class="el-icon-reading"></i>
+        <span slot="title">COURSE</span>
+      </template>
+    </el-menu-item>
+    <el-menu-item index="/mycourse">
+      <template slot="title">
+        <i class="el-icon-reading"></i>
+        <span slot="title">MyCourse</span>
+      </template>
+    </el-menu-item>
     <el-submenu index="2">
       <template slot="title">
         <i class="el-icon-menu"></i>
@@ -57,14 +69,14 @@
         <i class="el-icon-s-custom"></i>
         <span slot="title">Menu</span>
       </el-menu-item>
-      <el-menu-item index="/course">
-        <i class="el-icon-reading"></i>
-        <span slot="title">Course</span>
-      </el-menu-item>
-      <el-menu-item index="/mycourse">
-        <i class="el-icon-reading"></i>
-        <span slot="title">MyCourse</span>
-      </el-menu-item>
+<!--      <el-menu-item index="/course">-->
+<!--        <i class="el-icon-reading"></i>-->
+<!--        <span slot="title">Course</span>-->
+<!--      </el-menu-item>-->
+<!--      <el-menu-item index="/mycourse">-->
+<!--        <i class="el-icon-reading"></i>-->
+<!--        <span slot="title">MyCourse</span>-->
+<!--      </el-menu-item>-->
     </el-submenu>
   </el-menu>
 </template>

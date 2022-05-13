@@ -5,4 +5,5 @@ import com.example.springboot.entity.Course;
 
 public interface ICourseService extends IService<Course> {
 
+//    void setStudentCourse(Integer courseId, Integer studentId);
 }
