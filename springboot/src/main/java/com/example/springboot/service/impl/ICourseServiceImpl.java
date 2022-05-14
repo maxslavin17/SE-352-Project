@@ -10,12 +10,4 @@ import javax.annotation.Resource;
 
 @Service
 public class ICourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements ICourseService {
-//    @Resource
-//    private CourseMapper courseMapper;
-//
-//    @Override
-//    public void setStudentCourse(Integer courseId, Integer studentId) {
-////        courseMapper.deleteStudentCourse(courseId, studentId);
-////        courseMapper.setStudentCourse(courseId, studentId);
-//    }
 }

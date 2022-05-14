@@ -7,8 +7,5 @@ import org.apache.ibatis.annotations.Param;
 
 //@Mapper
 public interface CourseMapper extends BaseMapper<Course> {
-//    void deleteStudentCourse(@Param("courseId")Integer courseId, @Param("studentId") Integer studentId);
-//
-//    void setStudentCourse(@Param("courseId")Integer courseId, @Param("studentId") Integer studentId);
 }
 

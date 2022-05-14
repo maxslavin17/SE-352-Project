@@ -3,31 +3,4 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springboot.mapper.UserMapper">
 
-<!--    <update id="update">-->
-<!--        update sys_user-->
-<!--        <set>-->
-<!--            <if test="username != null">-->
-<!--                username = #{username},-->
-<!--            </if>-->
-<!--            &lt;!&ndash;            <if test="password != null">&ndash;&gt;-->
-<!--            &lt;!&ndash;                password = #{password}&ndash;&gt;-->
-<!--            &lt;!&ndash;            </if>&ndash;&gt;-->
-<!--            <if test="lastname != null">-->
-<!--                lastname = #{lastname},-->
-<!--            </if>-->
-<!--            <if test="email != null">-->
-<!--                email = #{email},-->
-<!--            </if>-->
-<!--            <if test="phone != null">-->
-<!--                phone = #{phone},-->
-<!--            </if>-->
-<!--            <if test="address != null">-->
-<!--                address = #{address}-->
-<!--            </if>-->
-<!--        </set>-->
-<!--        <where>-->
-<!--            id = #{id}-->
-<!--        </where>-->
-<!--    </update>-->
-
 </mapper>
