@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -29,6 +29,7 @@ public class User {
     //private LocalDateTime createTime;
     private String role;
 
+    @JsonIgnore
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="student_course",
                 uniqueConstraints = {@UniqueConstraint(columnNames = {"stu_id","cou_id"})},
@@ -36,5 +37,6 @@ public class User {
                 inverseJoinColumns = {@JoinColumn(name="cou_id", referencedColumnName = "id")}
     )
     @TableField(exist = false)
+    @ToString.Exclude
     private List<Course> courses = new ArrayList<Course>();
 }

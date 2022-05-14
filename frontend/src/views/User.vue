@@ -30,9 +30,9 @@
       <el-table-column prop="email" label="Email"></el-table-column>
       <el-table-column prop="phone" label="Phone"></el-table-column>
       <el-table-column prop="address" label="Address"></el-table-column>
-      <el-table-column label="Operation"  width="350" align="center">
+      <el-table-column label="Operation"  width="450" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" @click="checkStuCourse(scope.row.stuCourse)">Enrolled Course<i class="el-icon-edit"></i></el-button>
+          <el-button type="primary" @click="checkStuCourse(scope.row.id)" v-if="scope.row.role === 'STUDENT'">Check Enrolled Course<i class="el-icon-edit"></i></el-button>
           <el-button type="primary" @click="handleEdit(scope.row)">Edit <i class="el-icon-edit"></i></el-button>
           <el-popconfirm
               class="ml-5"
@@ -115,7 +115,8 @@ export default {
       dialogFormVisible: false,
       multipleSelection: [],
       roles: [],
-      stuVis: false
+      stuVis: false,
+      stuCourses: []
     }
   },
   created() {
@@ -201,8 +202,12 @@ export default {
       this.pageNum = pageNum
       this.load()
     },
-    checkStuCourse(stuCourses) {
-      this.stuCourse = stuCourses
+    checkStuCourse(id) {
+      this.request.get("/user/course/" + id).then(res => {
+        console.log(res)
+        this.stuCourses = res.data;
+      })
+
       this.stuVis = true
     }
   }

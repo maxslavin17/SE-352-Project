@@ -3,6 +3,7 @@ package com.example.springboot.controller;
 import com.example.springboot.common.DefConst;
 import com.example.springboot.common.Result;
 import com.example.springboot.controller.dto.UserDTO;
+import com.example.springboot.entity.Course;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.IUserService;
 import com.example.springboot.service.UserService;
@@ -13,6 +14,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,6 +35,19 @@ public class UserController {
     @GetMapping("/{id}")
     public Result findById(@PathVariable Integer id) {
         return Result.success(userService.findById(id));
+    }
+    @GetMapping("/course/{id}")
+    public Result findCourse(@PathVariable Integer id) {
+        User student = userService.findById(id);
+        List<Course> courses = student.getCourses();
+//        List<User> all = userService.findAll();
+//        List<Course> courses = new ArrayList<>();
+//        for (User u : all) {
+//            if (id == u.getId()) {
+//                courses = u.getCourses();
+//            }
+//        }
+        return Result.success(courses);
     }
     @GetMapping("/username/{username}")
     public Result findByUsername(@PathVariable String username) {
