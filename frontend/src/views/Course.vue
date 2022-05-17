@@ -29,8 +29,8 @@
       <el-table-column prop="description" label="Description" width="400"></el-table-column>
       <el-table-column label="operation"  width="500" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" @click="handleEnroll(scope.row.id)">Enroll <i class="el-icon-edit"></i></el-button>
-<!--          <el-button type="primary" @click="handleEdit(scope.row)" v-if="user.role === 'ADMID'">Edit <i class="el-icon-edit"></i></el-button>-->
+          <el-button type="primary" @click="handleEnroll(scope.row.id)" v-if="user.role === 'STUDENT'" >Enroll <i class="el-icon-edit"></i></el-button>
+          <el-button type="primary" @click="handleEdit(scope.row)" v-if="user.role === 'ADMIN'">Edit <i class="el-icon-edit"></i></el-button>
           <el-popconfirm
               class="ml-5"
               confirm-button-text='YES'
@@ -40,7 +40,7 @@
               title="Are you sure？"
               @confirm="del(scope.row.id)"
           >
-            <el-button type="primary" slot="reference"> Delete<i class="el-icon-remove-outline"></i></el-button>
+            <el-button type="primary" slot="reference" v-if="user.role === 'ADMIN'"> Delete<i class="el-icon-remove-outline"></i></el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -73,7 +73,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
         <el-button type="primary" @click="save">Confirm</el-button>
-        <el-button type="primary" @click="saveenroll">Enroll</el-button>
+<!--        <el-button type="primary" @click="saveenroll">Enroll</el-button>-->
       </div>
     </el-dialog>
 
@@ -128,17 +128,17 @@ export default {
         }
       })
     },
-    saveenroll() {
-      this.request.post("/mycourse", this.form).then(res => {
-        if (res) {
-          this.$message.success("Enrolled Success")
-          this.dialogFormVisible = false
-          this.load()
-        } else {
-          this.$message.error("Enrolled Failure")
-        }
-      })
-    },
+    // saveenroll() {
+    //   this.request.post("/mycourse", this.form).then(res => {
+    //     if (res) {
+    //       this.$message.success("Enrolled Success")
+    //       this.dialogFormVisible = false
+    //       this.load()
+    //     } else {
+    //       this.$message.error("Enrolled Failure")
+    //     }
+    //   })
+    // },
     handleAdd() {
       this.dialogFormVisible = true
       this.form = {}

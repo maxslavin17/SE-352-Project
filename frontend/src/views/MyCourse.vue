@@ -24,9 +24,9 @@
     <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="mycid" label="Course Identifier" width="280"></el-table-column>
-      <el-table-column prop="mycname" label="Name" width="235"></el-table-column>
-      <el-table-column prop="mydescription" label="Description" width="400"></el-table-column>
+      <el-table-column prop="cid" label="Course Identifier" width="280"></el-table-column>
+      <el-table-column prop="cname" label="Name" width="235"></el-table-column>
+      <el-table-column prop="description" label="Description" width="400"></el-table-column>
       <el-table-column label="operation"  width="500" align="center">
         <template slot-scope="scope">
           <el-button type="primary" @click="handleEdit(scope.row)">Enroll <i class="el-icon-edit"></i></el-button>
@@ -90,7 +90,8 @@ export default {
       mycname: "",
       form: {},
       dialogFormVisible: false,
-      multipleSelection: []
+      multipleSelection: [],
+      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
     }
   },
   created() {
@@ -98,20 +99,24 @@ export default {
   },
   methods: {
     load() {
-      this.request.get("/mycourse/page", {
-        params: {
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
-          username: this.username,
-          email: this.email,
-          address: this.address,
-        }
-      }).then(res => {
+      // this.request.get("/mycourse/page", {
+      //   params: {
+      //     pageNum: this.pageNum,
+      //     pageSize: this.pageSize,
+      //     username: this.username,
+      //     email: this.email,
+      //     address: this.address,
+      //   }
+      // }).then(res => {
+      //   console.log(res)
+      //
+      //   this.tableData = res.records
+      //   this.total = res.total
+      //
+      // })
+      this.request.get("/mycourse/user/" + this.user.id).then(res => {
         console.log(res)
-
-        this.tableData = res.records
-        this.total = res.total
-
+        this.tableData = res
       })
     },
     save() {
