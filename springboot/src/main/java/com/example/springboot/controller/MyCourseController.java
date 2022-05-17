@@ -2,9 +2,12 @@ package com.example.springboot.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.springboot.entity.Course;
 import com.example.springboot.entity.MyCourse;
+import com.example.springboot.entity.User;
 import com.example.springboot.service.MyCourseService;
 import com.example.springboot.service.IMyCourseService;
+import com.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,8 @@ import java.util.List;
 public class MyCourseController {
     @Resource
     private MyCourseService mycourseService;
+    @Resource
+    private UserService userService;
     @Autowired
     private IMyCourseService imycourseService;
 
@@ -24,6 +29,12 @@ public class MyCourseController {
     public List<MyCourse> findAll() {
         List<MyCourse> all = mycourseService.findAll();
         return all;
+    }
+    @GetMapping("/user/{uid}")
+    public List<Course> findMyCourses(@PathVariable Integer uid) {
+        User student = userService.findById(uid);
+        List<Course> courses = student.getCourses();
+        return courses;
     }
     @GetMapping("/{id}")
     public MyCourse findOne(@PathVariable Integer id) {
