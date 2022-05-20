@@ -27,9 +27,9 @@
       <el-table-column prop="cid" label="Course Identifier" width="280"></el-table-column>
       <el-table-column prop="cname" label="Name" width="235"></el-table-column>
       <el-table-column prop="description" label="Description" width="400"></el-table-column>
-      <el-table-column label="operation"  width="500" align="center">
+      <el-table-column label="Operation"  width="500" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" @click="handleEnroll(scope.row.id)" v-if="user.role === 'STUDENT'" >Enroll <i class="el-icon-edit"></i></el-button>
+          <el-button type="primary" @click="handleEnroll(scope.row.id)" v-if="user.role === 'STUDENT'" >Enroll Course<i class="el-icon-edit"></i></el-button>
           <el-button type="primary" @click="handleEdit(scope.row)" v-if="user.role === 'ADMIN'">Edit <i class="el-icon-edit"></i></el-button>
           <el-popconfirm
               class="ml-5"

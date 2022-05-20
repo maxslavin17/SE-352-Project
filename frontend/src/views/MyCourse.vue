@@ -24,12 +24,12 @@
     <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="cid" label="Course Identifier" width="280"></el-table-column>
-      <el-table-column prop="cname" label="Name" width="235"></el-table-column>
-      <el-table-column prop="description" label="Description" width="400"></el-table-column>
-      <el-table-column label="operation"  width="500" align="center">
+      <el-table-column prop="mycid" label="Course Identifier" width="280"></el-table-column>
+      <el-table-column prop="mycname" label="Name" width="235"></el-table-column>
+      <el-table-column prop="mydescription" label="Description" width="400"></el-table-column>
+      <el-table-column label="Operation"  width="500" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" @click="handleEdit(scope.row)">Enroll <i class="el-icon-edit"></i></el-button>
+<!--          <el-button type="primary" @click="handleEdit(scope.row)">Enroll <i class="el-icon-edit"></i></el-button>-->
           <el-popconfirm
               class="ml-5"
               confirm-button-text='YES'
@@ -95,7 +95,7 @@ export default {
     }
   },
   created() {
-    this.load()
+    this.load();
   },
   methods: {
     load() {
@@ -119,6 +119,15 @@ export default {
         this.tableData = res
       })
     },
+    saveAll() {
+      this.request.post("/mycourse", this.tableData).then(res => {
+        if (res) {
+          this.$message.success("Save All Success")
+        } else {
+          this.$message.error("Save All Failure")
+        }
+      })
+    },
     save() {
       this.request.post("/mycourse", this.form).then(res => {
         if (res) {
@@ -139,7 +148,7 @@ export default {
       this.dialogFormVisible = true
     },
     del(id) {
-      this.request.delete("/mycourse/" + id).then(res => {
+      this.request.delete("/mycourse/user/" + this.user.id + "/" + id).then(res => {
         if (res) {
           this.$message.success("Delete Success")
           this.load()

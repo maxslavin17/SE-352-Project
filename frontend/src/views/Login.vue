@@ -11,7 +11,7 @@
         </el-form-item>
         <el-form-item style="margin: 10px 0; text-align: right">
           <el-button type="primary" size="small"  autocomplete="off" @click="login">Login</el-button>
-          <el-button type="success" size="small"  autocomplete="off">Reset</el-button>
+          <el-button type="success" size="small"  autocomplete="off" @click="reset">Reset</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -54,6 +54,9 @@ export default {
           return false;
         }
       });
+    },
+    reset() {
+      this.form = {}
     }
   }
 }
