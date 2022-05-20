@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springboot.entity.Course;
 import com.example.springboot.service.CourseService;
 import com.example.springboot.service.ICourseService;
+import com.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,8 @@ import java.util.List;
 public class CourseController {
     @Resource
     private CourseService courseService;
+    @Resource
+    private UserService userService;
     @Autowired
     private ICourseService icourseService;
 
@@ -50,9 +53,13 @@ public class CourseController {
         }
         return result;
     }
-    @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Integer id) {
-        courseService.deleteById(id);
+    @DeleteMapping("/{cid}")
+    public boolean delete(@PathVariable Integer cid) {
+//        courseService.deleteById(cid);
+        Course course = courseService.findById(cid);
+        course.getUsers().forEach(u -> u.getCourses().remove(course));
+        userService.saveAll(course.getUsers());
+        courseService.delete(course);
         return true;
     }
 

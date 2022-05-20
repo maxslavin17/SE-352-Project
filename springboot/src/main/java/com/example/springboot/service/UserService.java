@@ -9,6 +9,7 @@ public interface UserService {
     public List<User> findAll();
     public User findByUsername(String username);
     public User save(User user);
+    public List<User> saveAll(List<User> users);
     public User edit(User user);
     public boolean deleteById(int id);
     public boolean deleteBatchById(List<Integer> ids);

@@ -15,6 +15,13 @@ public class MyCourse {
     private String mycid;
     private String mycname;
     private String mydescription;
+
+    public MyCourse(Integer id, String cid, String cname, String description) {
+        this.id = id;
+        mycid = cid;
+        mycname = cname;
+        mydescription = description;
+    }
 //    @ManyToMany(mappedBy = "courses")
 //    private List<Student> students = new ArrayList<>();
 }

@@ -9,6 +9,7 @@ public interface CourseService {
     public List<Course> findAll();
     public Course save(Course course);
     public Course edit(Course course);
+    public boolean delete(Course course);
     public boolean deleteById(int id);
     public boolean deleteBatchById(List<Integer> ids);
 

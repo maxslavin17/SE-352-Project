@@ -21,11 +21,12 @@ public class MyCourseServiceImpl implements MyCourseService {
         return mycourseRepository.findAll();
     }
 
-    public MyCourse save(MyCourse mycourse)
-    {
+    public MyCourse save(MyCourse mycourse) {
         return mycourseRepository.save(mycourse);
     }
-
+    public List<MyCourse> saveAll(List<MyCourse> myCourses) {
+        return mycourseRepository.saveAll(myCourses);
+    }
     public MyCourse edit(MyCourse mycourse)
     {
         return mycourseRepository.save(mycourse);

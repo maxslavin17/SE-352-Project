@@ -35,6 +35,17 @@ public class CourseServiceImpl  implements CourseService {
         return courseRepository.save(course);
     }
 
+    public boolean delete(Course course) {
+        boolean result = true;
+        try {
+            courseRepository.delete(course);
+        } catch(Exception ex)
+        {
+            result = false;
+        }
+        return result;
+
+    }
     public boolean deleteById(int userId)
     {
         boolean result = true;

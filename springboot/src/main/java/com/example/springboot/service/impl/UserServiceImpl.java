@@ -26,6 +26,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    public List<User> saveAll(List<User> users) {
+        return userRepository.saveAll(users);
+    }
+
     public User edit(User user) {
         return userRepository.save(user);
     }
