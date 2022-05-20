@@ -62,7 +62,7 @@
     <el-dialog title="Student Information" :visible.sync="dialogFormVisible" width="30%" >
       <el-form label-width="80px" size="small">
         <el-form-item label="Username">
-          <el-input v-model="form.username" autocomplete="off"></el-input>
+          <el-input v-model="form.usernamse" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Student ID">
           <el-input v-model="form.stu_id" autocomplete="off"></el-input>

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springboot.entity.Student;
 import com.example.springboot.service.StudentService;
+import com.example.springboot.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +17,8 @@ import java.util.List;
 public class StudentController {
     @Resource
     private StudentService studentService;
-    // @Autowired
-    // private ICourseService icourseService;
+    @Autowired
+    private IStudentService istudentService;
 
     @GetMapping
     public List<Student> findAll() {
@@ -61,16 +62,16 @@ public class StudentController {
         return true;
     }
 
-    // @GetMapping("/page")
-    // public Page<Course> findPage(@RequestParam Integer pageNum,
-    //                            @RequestParam Integer pageSize,
-    //                            @RequestParam(defaultValue = "") String cname) {
-    //     Page<Course> page = new Page<>(pageNum, pageSize);
-    //     QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
-    //     if (!"".equals(cname)) {
-    //         queryWrapper.like("cname", cname);
-    //     }
-    //     queryWrapper.orderByDesc("id");
-    //     return icourseService.page(page, queryWrapper);
-    // }
+    @GetMapping("/page")
+    public Page<Student> findPage(@RequestParam Integer pageNum,
+                               @RequestParam Integer pageSize,
+                               @RequestParam(defaultValue = "") String sname) {
+        Page<Student> page = new Page<>(pageNum, pageSize);
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        if (!"".equals(sname)) {
+            queryWrapper.like("sname", sname);
+        }
+        queryWrapper.orderByDesc("id");
+        return istudentService.page(page, queryWrapper);
+    }
 }

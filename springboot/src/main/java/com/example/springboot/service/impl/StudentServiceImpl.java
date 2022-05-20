@@ -60,11 +60,4 @@ public class StudentServiceImpl  implements StudentService {
         }
         return result;
     }
-    // @Override
-    // public void setStudentCourse(Integer courseId, Integer studentId) {
-    //     User student = userRepository.getById(studentId);
-    //     Course course = courseRepository.getById(courseId);
-    //     student.getCourses().add(course);
-    //     courseRepository.save(course);
-    // }
 }
