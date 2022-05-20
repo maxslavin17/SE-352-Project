@@ -40,6 +40,7 @@ export default {
     login() {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {
+          console.log(this.user)
           this.request.post("/user/login", this.user).then(res => {
             if(res.code === '200') {
               localStorage.setItem("user", JSON.stringify(res.data))
@@ -56,7 +57,7 @@ export default {
       });
     },
     reset() {
-      this.form = {}
+      this.user = {}
     }
   }
 }

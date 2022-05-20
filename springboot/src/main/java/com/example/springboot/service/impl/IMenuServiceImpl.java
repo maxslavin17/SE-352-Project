@@ -27,8 +27,8 @@ public class IMenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements I
 //        List<Menu> list = list(queryWrapper);
         List<Menu> list = menuService.findAll();
         List<Menu> parentNodes = list.stream().filter(menu -> menu.getPid() == null).collect(Collectors.toList());
-        for (Menu menu : parentNodes) {
-            menu.setChildren(list.stream().filter(m -> menu.getId().equals(m.getPid())).collect(Collectors.toList()));
+        for (Menu parent : parentNodes) {
+            parent.setChildren(list.stream().filter(m -> parent.getId().equals(m.getPid())).collect(Collectors.toList()));
         }
         return parentNodes;
     }
