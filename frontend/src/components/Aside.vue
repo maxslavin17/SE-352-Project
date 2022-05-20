@@ -46,6 +46,14 @@
         <span slot="title">COURSE</span>
       </template>
     </el-menu-item>
+
+    <el-menu-item index="/student">
+      <template slot="title">
+        <i class="el-icon-reading"></i>
+        <span slot="title">Student</span>
+      </template>
+    </el-menu-item>
+
     <el-menu-item index="/mycourse">
       <template slot="title">
         <i class="el-icon-reading"></i>
