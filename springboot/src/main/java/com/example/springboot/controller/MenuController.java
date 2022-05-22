@@ -26,8 +26,8 @@ public class MenuController {
     public Result findAll(@RequestParam(defaultValue = "") String name) {
         List<Menu> list = menuService.findAll();
         List<Menu> parentNode = list.stream().filter(menu -> menu.getPid() == null).collect(Collectors.toList());
-        for (Menu menu: parentNode) {
-            menu.setChildren(list.stream().filter(m -> menu.getId().equals(m.getPid())).collect(Collectors.toList()));
+        for (Menu parent: parentNode) {
+            parent.setChildren(list.stream().filter(m -> parent.getId().equals(m.getPid())).collect(Collectors.toList()));
         }
         return Result.success(parentNode);
     }

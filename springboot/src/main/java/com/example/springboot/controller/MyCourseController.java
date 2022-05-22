@@ -48,7 +48,7 @@ public class MyCourseController {
     public MyCourse findOne(@PathVariable Integer id) {
         return mycourseService.findById(id);
     }
-    @PostMapping
+    @PostMapping("/saveAll")
     public boolean saveAll(@RequestBody List<MyCourse> myCourses) {
         boolean result = true;
         try
@@ -61,19 +61,19 @@ public class MyCourseController {
         }
         return result;
     }
-//    @PostMapping
-//    public boolean add(@RequestBody MyCourse mycourse) {
-//        boolean result = true;
-//        try
-//        {
-//            mycourseService.save(mycourse);
-//        }
-//        catch(Exception ex)
-//        {
-//            result = false;
-//        }
-//        return result;
-//    }
+    @PostMapping
+    public boolean add(@RequestBody MyCourse mycourse) {
+        boolean result = true;
+        try
+        {
+            mycourseService.save(mycourse);
+        }
+        catch(Exception ex)
+        {
+            result = false;
+        }
+        return result;
+    }
     @DeleteMapping("/user/{uid}/{cid}")
     public boolean deleteMyCourse(@PathVariable Integer uid, @PathVariable Integer cid) {
 //        User student = userService.findById(uid);
@@ -102,13 +102,13 @@ public class MyCourseController {
     @GetMapping("/page")
     public Page<MyCourse> findPage(@RequestParam Integer pageNum,
                                @RequestParam Integer pageSize,
-                               @RequestParam(defaultValue = "") String cname) {
+                               @RequestParam(defaultValue = "") String mycname) {
         Page<MyCourse> page = new Page<>(pageNum, pageSize);
         QueryWrapper<MyCourse> queryWrapper = new QueryWrapper<>();
-        if (!"".equals(cname)) {
-            queryWrapper.like("cname", cname);
+        if (!"".equals(mycname)) {
+            queryWrapper.like("mycname", mycname);
         }
-        queryWrapper.orderByDesc("id");
+//        queryWrapper.orderByDesc("id");
         return imycourseService.page(page, queryWrapper);
     }
 }
