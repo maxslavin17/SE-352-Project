@@ -26,6 +26,7 @@
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="name" label="Name"></el-table-column>
       <el-table-column prop="description" label="Description" ></el-table-column>
+<!--      <el-table-column prop="category" label="Category" ></el-table-column>-->
       <el-table-column label="Operation"  width="320" align="center">
         <template slot-scope="scope">
           <el-button type="primary" @click="selectMenu(scope.row.id)">Menu Access <i class="el-icon-menu"></i></el-button>

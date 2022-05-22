@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="Please Input Coursename" suffix-icon="el-icon-search" v-model="cname"></el-input>
+      <el-input style="width: 200px" placeholder="Please Input Name" suffix-icon="el-icon-search" v-model="cname"></el-input>
       <el-button class="ml-5" type="primary" @click="load">Search</el-button>
       <el-button type="primary" @click="reset">Reset</el-button>
     </div>
@@ -73,7 +73,6 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
         <el-button type="primary" @click="save">Confirm</el-button>
-<!--        <el-button type="primary" @click="saveenroll">Enroll</el-button>-->
       </div>
     </el-dialog>
 
@@ -105,9 +104,7 @@ export default {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          username: this.username,
-          email: this.email,
-          address: this.address,
+          cname: this.cname,
         }
       }).then(res => {
         console.log(res)
@@ -128,17 +125,6 @@ export default {
         }
       })
     },
-    // saveenroll() {
-    //   this.request.post("/mycourse", this.form).then(res => {
-    //     if (res) {
-    //       this.$message.success("Enrolled Success")
-    //       this.dialogFormVisible = false
-    //       this.load()
-    //     } else {
-    //       this.$message.error("Enrolled Failure")
-    //     }
-    //   })
-    // },
     handleAdd() {
       this.dialogFormVisible = true
       this.form = {}
@@ -182,9 +168,7 @@ export default {
       })
     },
     reset() {
-      this.username = ""
-      this.email = ""
-      this.address = ""
+      this.cname = ""
       this.load()
     },
     handleSizeChange(pageSize) {

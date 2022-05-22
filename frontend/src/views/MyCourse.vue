@@ -1,8 +1,8 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="Please Input Coursename" suffix-icon="el-icon-search" v-model="mycname"></el-input>
-      <el-button class="ml-5" type="primary" @click="load">Search</el-button>
+      <el-input style="width: 200px" placeholder="Please Input Name" suffix-icon="el-icon-search" v-model="mycname"></el-input>
+      <el-button class="ml-5" type="primary" @click="search">Search</el-button>
       <el-button type="primary" @click="reset">Reset</el-button>
     </div>
 
@@ -94,38 +94,57 @@ export default {
       user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
     }
   },
-  created() {
-    this.load();
+  async created() {
+    await this.load();
+    await this.saveAll();
   },
   methods: {
     load() {
-      // this.request.get("/mycourse/page", {
-      //   params: {
-      //     pageNum: this.pageNum,
-      //     pageSize: this.pageSize,
-      //     username: this.username,
-      //     email: this.email,
-      //     address: this.address,
-      //   }
-      // }).then(res => {
-      //   console.log(res)
-      //
-      //   this.tableData = res.records
-      //   this.total = res.total
-      //
-      // })
-      this.request.get("/mycourse/user/" + this.user.id).then(res => {
-        console.log(res)
-        this.tableData = res
+      return new Promise((resolve) => {
+        this.request.get("/mycourse/user/" + this.user.id).then(res => {
+          console.log("res:")
+          console.log(res)
+          this.tableData = res
+          resolve()
+          console.log("this.tableData: " )
+          console.log(this.tableData)
+          return
+        })
       })
     },
     saveAll() {
-      this.request.post("/mycourse", this.tableData).then(res => {
+      console.log("this.tableData2: " )
+      var parsedobj = JSON.parse(JSON.stringify(this.tableData))
+      console.log(parsedobj)
+      console.log(this.tableData)
+      // this.tableData.map((v => (this.request.post("/mycourse", v).then(res => {
+      //   if (res) {
+      //     this.$message.success("Save Success")
+      //   } else {
+      //     this.$message.error("Save Failure")
+      //   }
+      // }))))
+      this.request.post("/mycourse/saveAll", this.tableData).then(res => {
         if (res) {
-          this.$message.success("Save All Success")
+          this.$message.success("Refresh Success")
         } else {
-          this.$message.error("Save All Failure")
+          this.$message.error("Refresh Failure")
         }
+      })
+    },
+    search() {
+      this.request.get("/mycourse/page", {
+        params: {
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          mycname: this.mycname,
+        }
+      }).then(res => {
+        console.log(res)
+
+        this.tableData = res.records
+        this.total = res.total
+
       })
     },
     save() {
@@ -173,9 +192,7 @@ export default {
       })
     },
     reset() {
-      this.username = ""
-      this.email = ""
-      this.address = ""
+      this.mycname = ""
       this.load()
     },
     handleSizeChange(pageSize) {
