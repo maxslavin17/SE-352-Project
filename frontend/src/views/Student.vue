@@ -62,7 +62,7 @@
     <el-dialog title="Student Information" :visible.sync="dialogFormVisible" width="30%" >
       <el-form label-width="80px" size="small">
         <el-form-item label="Username">
-          <el-input v-model="form.usernamse" autocomplete="off"></el-input>
+          <el-input v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Student ID">
           <el-input v-model="form.stu_id" autocomplete="off"></el-input>
@@ -109,11 +109,12 @@ export default {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
           username: this.username,
+          stu_id: this.stu_id,
           email: this.email,
           address: this.address,
         }
       }).then(res => {
-        console.log(res)
+        console.log("RESULT: ", res)
 
         this.tableData = res.records
         this.total = res.total
@@ -168,6 +169,7 @@ export default {
       this.username = ""
       this.email = ""
       this.address = ""
+      this.stu_id = ""
       this.load()
     },
     handleSizeChange(pageSize) {
