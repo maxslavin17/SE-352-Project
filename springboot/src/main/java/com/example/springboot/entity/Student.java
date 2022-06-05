@@ -15,8 +15,8 @@ public class Student {
     private Integer id;
 
     private String username;
-    private String stu_id;
-    private String stu_lastname;
+    private String sid;
+    private String slastname;
     private String email;
 //    @ManyToMany(fetch=FetchType.EAGER)
 //    @JoinTable(name="student_course", uniqueConstraints = {@UniqueConstraint(columnNames = {"s_id","c_id"})},

@@ -50,7 +50,7 @@
     <el-menu-item index="/student">
       <template slot="title">
         <i class="el-icon-reading"></i>
-        <span slot="title">Student</span>
+        <span slot="title">STUDENT</span>
       </template>
     </el-menu-item>
 

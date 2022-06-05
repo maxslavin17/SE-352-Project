@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="Enter student last name" suffix-icon="el-icon-search" v-model="stu_lastname"></el-input>
+      <el-input style="width: 200px" placeholder="Enter student last name" suffix-icon="el-icon-search" ></el-input>
       <el-button class="ml-5" type="primary" @click="load">Search</el-button>
       <el-button type="primary" @click="reset">Reset</el-button>
     </div>
@@ -25,8 +25,8 @@
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="username" label="User Name" width="280"></el-table-column>
-      <el-table-column prop="stu_id" label="Student ID" width="235"></el-table-column>
-      <el-table-column prop="stu_lastname" label="Student Last Name" width="400"></el-table-column>
+      <el-table-column prop="sid" label="Student ID" width="235"></el-table-column>
+      <el-table-column prop="slastname" label="Student Last Name" width="400"></el-table-column>
       <el-table-column prop="email" label="E-mail Address" width="400"></el-table-column>
       
       <el-table-column label="operation"  width="500" align="center">
@@ -65,10 +65,10 @@
           <el-input v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Student ID">
-          <el-input v-model="form.stu_id" autocomplete="off"></el-input>
+          <el-input v-model="form.sid" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Student Last Name">
-          <el-input v-model="form.stu_lastname" autocomplete="off"></el-input>
+          <el-input v-model="form.slastname" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Student Email">
           <el-input v-model="form.email" autocomplete="off"></el-input>
@@ -109,12 +109,11 @@ export default {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
           username: this.username,
-          stu_id: this.stu_id,
-          email: this.email,
-          address: this.address,
+          sid: this.sid,
+        //   email: this.email,
         }
       }).then(res => {
-        console.log("RESULT: ", res)
+        console.log(res)
 
         this.tableData = res.records
         this.total = res.total
@@ -169,7 +168,6 @@ export default {
       this.username = ""
       this.email = ""
       this.address = ""
-      this.stu_id = ""
       this.load()
     },
     handleSizeChange(pageSize) {
