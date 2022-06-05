@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class StudentCourse implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer stu_id;
+    private Integer sid;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cou_id;
