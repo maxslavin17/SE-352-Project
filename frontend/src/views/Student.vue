@@ -24,12 +24,12 @@
     <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="username" label="User Name" width="280"></el-table-column>
-      <el-table-column prop="sid" label="Student ID" width="235"></el-table-column>
-      <el-table-column prop="slastname" label="Student Last Name" width="400"></el-table-column>
-      <el-table-column prop="email" label="E-mail Address" width="400"></el-table-column>
+      <el-table-column prop="username" label="User Name" ></el-table-column>
+      <el-table-column prop="sid" label="Student ID" ></el-table-column>
+      <el-table-column prop="slastname" label="Student Last Name" ></el-table-column>
+      <el-table-column prop="email" label="E-mail Address" ></el-table-column>
       
-      <el-table-column label="operation"  width="500" align="center">
+      <el-table-column label="Operation"  width="500" align="center">
         <template slot-scope="scope">
           <el-button type="primary" @click="handleEnroll(scope.row.id)">Enroll <i class="el-icon-edit"></i></el-button>
           <el-popconfirm

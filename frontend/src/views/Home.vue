@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Welcome!</h1>
+    <h1>Welcome to SE352/452!</h1>
   </div>
 </template>
 
